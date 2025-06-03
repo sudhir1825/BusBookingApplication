@@ -2,6 +2,11 @@
 
 A full-stack web application built using **Spring Boot**, **Spring Security**, **Thymeleaf**, and **MySQL** that enables users to search for buses, book tickets, view booking history, and receive email confirmation upon successful booking.
 
+How the application works:
+
+Check it out in this link - https://drive.google.com/file/d/1X6-ry6Bs7qq2QDmn7-1mxXSXefMoSY72/view?usp=sharing
+
+
 ---
 
 ## 🚀 Tech Stack
