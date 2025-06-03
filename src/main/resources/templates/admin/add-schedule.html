@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Bus Schedule</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Add Bus Schedule</h2>
+
+    <div th:if="${param.success}" class="alert alert-success">
+        Schedule added successfully!
+    </div>
+
+    <form th:action="@{/admin/schedule/add}" th:object="${schedule}" method="post" novalidate>
+        <div class="mb-3">
+            <label for="busId" class="form-label">Bus</label>
+            <select th:field="*{busId}" id="busId" class="form-select" required>
+                <option value="" disabled selected>Select a bus</option>
+                <option th:each="bus : ${buses}" th:value="${bus.id}" th:text="${bus.busName}"></option>
+            </select>
+            <div th:if="${#fields.hasErrors('busId')}" th:errors="*{busId}" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="source" class="form-label">Source</label>
+            <input type="text" th:field="*{source}" id="source" class="form-control" placeholder="Enter source" required/>
+            <div th:if="${#fields.hasErrors('source')}" th:errors="*{source}" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="destination" class="form-label">Destination</label>
+            <input type="text" th:field="*{destination}" id="destination" class="form-control" placeholder="Enter destination" required/>
+            <div th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <input type="date" th:field="*{date}" id="date" class="form-control" required/>
+            <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="departureTime" class="form-label">Departure Time</label>
+            <input type="time" th:field="*{departureTime}" id="departureTime" class="form-control" required/>
+            <div th:if="${#fields.hasErrors('departureTime')}" th:errors="*{departureTime}" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="arrivalTime" class="form-label">Arrival Time</label>
+            <input type="time" th:field="*{arrivalTime}" id="arrivalTime" class="form-control" required/>
+            <div th:if="${#fields.hasErrors('arrivalTime')}" th:errors="*{arrivalTime}" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" step="0.01" min="0" th:field="*{price}" id="price" class="form-control" placeholder="Enter price" required/>
+                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="totalSeats" class="form-label">Available Seats</label>
+            <input type="number" min="0" th:field="*{totalSeats}" id="availableSeats" class="form-control" placeholder="Enter available seats" required/>
+            <div th:if="${#fields.hasErrors('totalSeats')}" th:errors="*{totalSeats}" class="text-danger"></div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Schedule</button>
+    </form>
+</div>
+</body>
+</html>

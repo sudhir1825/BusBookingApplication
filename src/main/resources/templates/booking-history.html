@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Your Booking History</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+          background-color: #f8f9fa;
+        }
+        h2 {
+          margin-bottom: 1.5rem;
+        }
+        .card {
+          box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,.075);
+        }
+        .table th, .table td {
+          vertical-align: middle;
+        }
+        @media (max-width: 576px) {
+          /* Smaller text on mobile for tables */
+          .table thead {
+            display: none;
+          }
+          .table, .table tbody, .table tr, .table td {
+            display: block;
+            width: 100%;
+          }
+          .table tr {
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #dee2e6;
+          }
+          .table td {
+            text-align: right;
+            padding-left: 50%;
+            position: relative;
+          }
+          .table td::before {
+            content: attr(data-label);
+            position: absolute;
+            left: 1rem;
+            width: 45%;
+            padding-left: 1rem;
+            font-weight: 600;
+            text-align: left;
+          }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container mt-5 mb-5">
+
+
+    <h2 class="text-center text-primary fw-bold">Your Booking History</h2>
+
+    <div th:if="${bookings.isEmpty()}" class="text-center my-4">
+        <p class="fs-5">No bookings found.</p>
+    </div>
+
+    <div th:unless="${bookings.isEmpty()}">
+        <div th:each="booking : ${bookings}" class="card mb-4">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-sm-6 col-md-4">
+                        <p><strong>Bus:</strong> <span th:text="${booking.busSchedule.bus.busName}"></span></p>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <p><strong>From:</strong> <span th:text="${booking.busSchedule.source}"></span></p>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <p><strong>To:</strong> <span th:text="${booking.busSchedule.destination}"></span></p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-sm-6 col-md-4">
+                        <p><strong>Departure:</strong> <span th:text="${#temporals.format(booking.busSchedule.departureTime, 'yyyy-MM-dd HH:mm')}"></span></p>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <p><strong>Price per seat:</strong> ₹<span th:text="${booking.busSchedule.price}"></span></p>
+                    </div>
+                </div>
+
+                <h6 class="fw-semibold mb-3">Passengers</h6>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered align-middle mb-0">
+                        <thead class="table-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Seat Number</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="passenger : ${booking.passengers}">
+                            <td data-label="Name" th:text="${passenger.name}"></td>
+                            <td data-label="Seat Number" th:text="${passenger.seatNumber}"></td>
+                            <td data-label="Age" th:text="${passenger.age}"></td>
+                            <td data-label="Gender" th:text="${passenger.gender}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a href="/home" class="btn btn-primary px-4">Back to Home</a>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

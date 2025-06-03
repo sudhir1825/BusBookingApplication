@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Enter Passenger Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-bottom: 3rem;
+        }
+        .container {
+            max-width: 700px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+        }
+        h3 {
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        h5 {
+            margin-top: 1.5rem;
+            font-weight: 600;
+        }
+        hr {
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        @media (max-width: 576px) {
+            .container {
+                padding: 1rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="container">
+    <h3>Passenger Details</h3>
+    <form th:action="@{/bookings/submit}" th:object="${booking}" method="post" novalidate>
+        <input type="hidden" th:field="*{busScheduleId}" />
+
+        <div th:each="passenger, stat : *{passengers}">
+            <h5>Seat <span th:text="${passenger.seatNumber}"></span></h5>
+            <input type="hidden" th:field="*{passengers[__${stat.index}__].seatNumber}" />
+
+            <div class="mb-3">
+                <label for="name__${stat.index}" class="form-label">Name</label>
+                <input type="text" id="name__${stat.index}" th:field="*{passengers[__${stat.index}__].name}" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label for="age__${stat.index}" class="form-label">Age</label>
+                <input type="number" id="age__${stat.index}" th:field="*{passengers[__${stat.index}__].age}" class="form-control" min="0" required />
+            </div>
+            <div class="mb-3">
+                <label for="gender__${stat.index}" class="form-label">Gender</label>
+                <select id="gender__${stat.index}" th:field="*{passengers[__${stat.index}__].gender}" class="form-select" required>
+                    <option value="" disabled selected>Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <hr />
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">Confirm Booking</button>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
