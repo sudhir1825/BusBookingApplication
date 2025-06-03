@@ -128,7 +128,7 @@ git clone https://github.com/your-username/BusBookingApplication.git
 cd BusBookingApplication
 ```
 
-2. Configure the database
+### 2. Configure the database
 Make sure you have MySQL running and update the application.properties with your DB credentials:
 ```bash
 spring.datasource.url=jdbc:mysql://localhost:3306/busbooking
@@ -137,23 +137,23 @@ spring.datasource.password=yourpassword
 ```
 
 
-3. Build the project using Maven:
+### 3. Build the project using Maven:
 ```bash
 ./mvnw clean install
 ```
 
 
-5. Run the application:
+### 4. Run the application:
 ```bash
 ./mvnw spring-boot:run
 ```
 
-6. Access in Browser:
+### 5. Access in Browser:
 ```bash
 http://localhost:8080
 ```
 
-✅ Email Notification
+## ✅ Email Notification
 
 Upon successful booking, the user will receive a booking confirmation email using the EmailService and Thymeleaf email template (booking-confirmation.html).
 
